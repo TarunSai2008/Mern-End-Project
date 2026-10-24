@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --color-kitchen: #fdf4ea;
+  --color-tomato: #dc2626;
+  --color-sage: #65a30d;
+  --color-sage-soft: #eaf4d8;
+  --font-display: "Quicksand", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-display);
+  background-color: var(--color-kitchen);
+  color: #44403c;
+  font-weight: 600;
+}
