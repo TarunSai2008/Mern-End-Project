@@ -160,6 +160,8 @@ Live links: backend — [add URL] · frontend — [add URL]
 - Frontend handles loading/empty/error/success states; toasts on every
   mutation; 401 auto-logout.
 
+- **Weekly meal planner** — pick the ready recipes, get one aggregated shopping list (quantities merged, pantry netted out), push it to the grocery list in a tap.
+
 ## Roadmap
 
 - Barcode-scan restocking.

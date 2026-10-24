@@ -17,6 +17,8 @@ export default function Kitchen() {
   const [waste, setWaste] = useState(null);
   const [error, setError] = useState('');
   const [tab, setTab] = useState('cook');
+  const [plan, setPlan] = useState(null);
+  const [planBusy, setPlanBusy] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({ name: '', quantity: '', unit: 'pc', aisle: 'other', expiresAt: '' });
@@ -103,6 +105,30 @@ export default function Kitchen() {
     }
   }
 
+  async function makePlan() {
+    setPlanBusy(true);
+    try {
+      const r = await client.post('/mealplan', { recipeIds: matches.filter((m) => m.cookable).slice(0, 5).map((m) => m._id) });
+      setPlan(r.data);
+      toast(`Plan built — ${r.data.shoppingList.length} items to buy, ${r.data.coveredFromPantry} covered by pantry`);
+    } catch (err) {
+      toast(err.message, 'error');
+    } finally {
+      setPlanBusy(false);
+    }
+  }
+
+  async function pushPlan() {
+    try {
+      const r = await client.post('/mealplan/push', { items: plan.shoppingList.map((s) => ({ name: s.name, quantity: s.quantity, unit: s.unit })) });
+      toast(`Added ${r.data.added} items to the grocery list${r.data.skipped ? ` (${r.data.skipped} already there)` : ''}`);
+      setTab('grocery');
+      load();
+    } catch (err) {
+      toast(err.message, 'error');
+    }
+  }
+
   async function toggleGrocery(item) {
     try {
       await client.patch(`/grocery/${item._id}`, { done: !item.done });
@@ -138,6 +164,29 @@ export default function Kitchen() {
 
         {error && <div className="mt-6"><ErrorState message={error} onRetry={load} /></div>}
         {!error && pantry === null && <Loading label="Opening the fridge…" />}
+
+        {tab === 'cook' && matches !== null && matches.length > 0 && (
+          <div className="mt-4 rounded-3xl border-2 border-sage/30 bg-sage-soft/50 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm font-bold text-sage">🗓️ Weekly plan: cook the top {Math.min(5, matches.filter((m) => m.cookable).length)} ready recipes?</p>
+              <button onClick={makePlan} disabled={planBusy || !matches.some((m) => m.cookable)}
+                className="rounded-full bg-sage px-5 py-2 text-sm font-bold text-white disabled:opacity-40">
+                {planBusy ? 'Planning…' : 'Build plan'}
+              </button>
+            </div>
+            {plan && (
+              <div className="mt-3">
+                <p className="text-xs text-stone-500">{plan.shoppingList.length} to buy · {plan.coveredFromPantry} covered from pantry</p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {plan.shoppingList.slice(0, 10).map((s) => (
+                    <span key={s.name} className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold capitalize">{s.name} ×{s.quantity}{s.unit}</span>
+                  ))}
+                </div>
+                <button onClick={pushPlan} className="mt-3 rounded-full bg-tomato px-5 py-2 text-sm font-bold text-white">🛒 Push to grocery list</button>
+              </div>
+            )}
+          </div>
+        )}
 
         {tab === 'cook' && matches !== null && (
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

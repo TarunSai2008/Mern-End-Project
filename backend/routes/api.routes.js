@@ -3,6 +3,7 @@ const rateLimit = require('express-rate-limit');
 const a = require('../controllers/auth.controller');
 const p = require('../controllers/pantry.controller');
 const r = require('../controllers/recipe.controller');
+const extra = require('../controllers/extra.controller');
 const { requireAuth } = require('../middlewares/auth');
 
 const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 50, standardHeaders: true, legacyHeaders: false });
@@ -29,5 +30,7 @@ router.patch('/grocery/:id', r.groceryUpdate);
 router.delete('/grocery/:id', r.groceryRemove);
 
 router.get('/reports/waste', r.wasteReport);
+router.post('/mealplan', extra.plan);
+router.post('/mealplan/push', extra.pushPlan);
 
 module.exports = router;
