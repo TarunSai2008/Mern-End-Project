@@ -10,7 +10,27 @@
 
 body {
   font-family: var(--font-display);
-  background-color: var(--color-kitchen);
+  background:
+    radial-gradient(60rem 30rem at 110% -10%, rgba(220,38,38,.08), transparent),
+    radial-gradient(50rem 26rem at -10% 110%, rgba(101,163,13,.1), transparent),
+    var(--color-kitchen);
   color: #44403c;
   font-weight: 600;
+  min-height: 100vh;
 }
+
+@keyframes floatY { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-14px) rotate(3deg); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes wobble { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+
+.reveal > * { opacity: 0; animation: fadeUp .8s cubic-bezier(.2,.7,.3,1) forwards; }
+.reveal > *:nth-child(1) { animation-delay: .05s } .reveal > *:nth-child(2) { animation-delay: .15s }
+.reveal > *:nth-child(3) { animation-delay: .25s } .reveal > *:nth-child(4) { animation-delay: .35s }
+
+.float { animation: floatY 6s ease-in-out infinite; }
+.wobble { animation: wobble 4s ease-in-out infinite; }
+.marquee { display: flex; width: max-content; animation: marquee 28s linear infinite; }
+.hover-lift { transition: transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s; }
+.hover-lift:hover { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 22px 40px -16px rgba(220,38,38,.25); }
+.glass { background: rgba(255,255,255,.7); backdrop-filter: blur(14px); border: 1px solid rgba(220,38,38,.08); box-shadow: 0 8px 30px rgba(101,163,13,.08); }
