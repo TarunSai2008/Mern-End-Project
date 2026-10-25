@@ -29,14 +29,14 @@ export default function Landing() {
             and builds a grocery list of exactly what's missing.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Link to="/register" className="hover-lift rounded-full bg-tomato px-9 py-4 font-bold text-white shadow-xl shadow-red-200">Stock my pantry →</Link>
-            <Link to="/login" className="glass rounded-full px-9 py-4 font-bold text-stone-700">Log in</Link>
+            <Link to="/register" className="btn-3d hover-lift rounded-full bg-tomato px-9 py-4 font-bold text-white shadow-xl shadow-red-200">Stock my pantry →</Link>
+            <Link to="/login" className="btn-3d glass tilt-card rounded-full px-9 py-4 font-bold text-stone-700">Log in</Link>
           </div>
         </section>
 
         {/* recipe match demo */}
         <section className="reveal mx-auto mb-10 max-w-3xl">
-          <div className="glass rounded-[2.5rem] p-8">
+          <div className="float-3d glass tilt-card rounded-[2.5rem] p-8">
             <p className="text-center text-xs font-bold uppercase tracking-widest text-sage">what can I cook tonight?</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
               {[
