@@ -28,7 +28,7 @@ export default function Login() {
       <span className="pointer-events-none absolute left-[10%] top-24 float-3d select-none text-5xl opacity-60">🍅</span>
       <span className="pointer-events-none absolute bottom-24 right-[12%] float-3d select-none text-4xl opacity-60" style={{ animationDelay: '-3s' }}>🥬</span>
 
-      <div className="card tilt-card relative w-full max-w-md p-8 sm:p-10">
+      <div className="card relative w-full max-w-md p-8 sm:p-10">
         <div className="text-center">
           <span className="mx-auto grid h-14 w-14 place-items-center rounded-3xl bg-gradient-to-br from-basil-bright to-basil text-2xl shadow-[0_14px_28px_-10px_rgba(30,86,49,.55),inset_0_1px_0_rgba(255,255,255,.3)]">🥘</span>
           <h1 className="serif mt-5 text-3xl font-bold">Welcome back</h1>

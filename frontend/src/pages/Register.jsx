@@ -38,7 +38,7 @@ export default function Register() {
       <span className="pointer-events-none absolute right-[8%] top-24 float-3d select-none text-5xl opacity-60">🥕</span>
       <span className="pointer-events-none absolute bottom-24 left-[8%] float-3d select-none text-4xl opacity-60" style={{ animationDelay: '-2s' }}>🧄</span>
 
-      <div className="card tilt-card relative w-full max-w-md p-8 sm:p-10">
+      <div className="card relative w-full max-w-md p-8 sm:p-10">
         <div className="text-center">
           <h1 className="serif text-3xl font-bold">Open your kitchen</h1>
           <p className="mt-1.5 text-sm text-bark">Track shelves · cook more · waste less</p>
