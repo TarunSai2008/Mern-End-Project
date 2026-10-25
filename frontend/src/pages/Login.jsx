@@ -18,35 +18,38 @@ export default function Login() {
     setBusy(true);
     try {
       await login(form.email, form.password);
-      toast("Kitchen's open!");
+      toast('Kitchen\u2019s open!');
       navigate('/kitchen');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setBusy(false);
-    }
+    } catch (err) { setError(err.message); } finally { setBusy(false); }
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
-      <div className="w-full max-w-sm">
-        <div className="mb-6 text-center">
-          <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-tomato text-xl text-white">🥘</span>
-          <h1 className="mt-3 text-2xl font-bold">Welcome back</h1>
-          <p className="text-sm text-stone-500">What's cooking tonight?</p>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4">
+      <span className="pointer-events-none absolute left-[10%] top-24 float-3d select-none text-5xl opacity-60">🍅</span>
+      <span className="pointer-events-none absolute bottom-24 right-[12%] float-3d select-none text-4xl opacity-60" style={{ animationDelay: '-3s' }}>🥬</span>
+
+      <div className="card tilt-card relative w-full max-w-md p-8 sm:p-10">
+        <div className="text-center">
+          <span className="mx-auto grid h-14 w-14 place-items-center rounded-3xl bg-gradient-to-br from-basil-bright to-basil text-2xl shadow-[0_14px_28px_-10px_rgba(30,86,49,.55),inset_0_1px_0_rgba(255,255,255,.3)]">🥘</span>
+          <h1 className="serif mt-5 text-3xl font-bold">Welcome back</h1>
+          <p className="mt-1.5 text-sm text-bark">What\u2019s cooking tonight?</p>
         </div>
-        <form onSubmit={submit} className="space-y-4 rounded-3xl border-2 border-stone-200/70 bg-white p-6">
-          {error && <p className="rounded-xl bg-red-50 px-3 py-2 text-sm text-tomato">{error}</p>}
-          <label className="block"><span className="text-sm font-bold">Email</span>
-            <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} autoComplete="email"
-              className="mt-1 w-full rounded-2xl border-2 border-stone-200 px-3 py-2.5 outline-none focus:border-sage" /></label>
-          <label className="block"><span className="text-sm font-bold">Password</span>
-            <input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} autoComplete="current-password"
-              className="mt-1 w-full rounded-2xl border-2 border-stone-200 px-3 py-2.5 outline-none focus:border-sage" /></label>
-          <button disabled={busy} className="w-full rounded-2xl bg-tomato py-2.5 font-bold text-white hover:bg-red-700 disabled:opacity-60">{busy ? 'Checking…' : 'Log in'}</button>
-          <p className="text-center text-sm text-stone-500">New kitchen? <Link to="/register" className="font-bold text-tomato hover:underline">Stock it</Link></p>
+        <form onSubmit={submit} className="mt-8 space-y-4">
+          {error && <p className="rounded-xl bg-tomato-soft px-4 py-2.5 text-sm font-semibold text-tomato" role="alert">{error}</p>}
+          {[['Email', 'email', 'email', form.email, (v) => setForm({ ...form, email: v })],
+            ['Password', 'password', 'current-password', form.password, (v) => setForm({ ...form, password: v })]].map(([label, type, ac, val, set]) => (
+            <label key={label} className="block">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-bark">{label}</span>
+              <input type={type} value={val} onChange={(e) => set(e.target.value)} autoComplete={ac}
+                className="mt-1.5 w-full rounded-xl border border-basil/20 bg-white px-4 py-3 outline-none transition focus:border-basil focus:ring-2 focus:ring-basil/15" />
+            </label>
+          ))}
+          <button disabled={busy} className="btn-primary w-full rounded-xl py-3.5 text-base font-bold disabled:opacity-70">{busy ? 'Opening…' : 'Log in'}</button>
+          <p className="text-center text-sm text-bark">New kitchen? <Link to="/register" className="font-bold text-basil hover:underline">Stock it</Link></p>
         </form>
-        <p className="mt-4 text-center text-xs text-stone-400">Demo: arav@demo.com · Demo@1234</p>
+        <p className="mt-6 rounded-xl border border-dashed border-basil/20 bg-white/60 px-4 py-2.5 text-center text-xs font-semibold tracking-wide text-bark">
+          DEMO · arav@demo.com · Demo@1234
+        </p>
       </div>
     </div>
   );

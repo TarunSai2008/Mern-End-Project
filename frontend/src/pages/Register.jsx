@@ -30,30 +30,30 @@ export default function Register() {
       await register(form.name.trim(), form.email.trim(), form.password);
       toast('Kitchen stocked with 20 recipes to start!');
       navigate('/kitchen');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setBusy(false);
-    }
+    } catch (err) { setError(err.message); } finally { setBusy(false); }
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 py-10">
-      <div className="w-full max-w-sm">
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold">Open your kitchen</h1>
-          <p className="text-sm text-stone-500">Track shelves, cook more, waste less</p>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
+      <span className="pointer-events-none absolute right-[8%] top-24 float-3d select-none text-5xl opacity-60">🥕</span>
+      <span className="pointer-events-none absolute bottom-24 left-[8%] float-3d select-none text-4xl opacity-60" style={{ animationDelay: '-2s' }}>🧄</span>
+
+      <div className="card tilt-card relative w-full max-w-md p-8 sm:p-10">
+        <div className="text-center">
+          <h1 className="serif text-3xl font-bold">Open your kitchen</h1>
+          <p className="mt-1.5 text-sm text-bark">Track shelves · cook more · waste less</p>
         </div>
-        <form onSubmit={submit} className="space-y-4 rounded-3xl border-2 border-stone-200/70 bg-white p-6">
-          {error && <p className="rounded-xl bg-red-50 px-3 py-2 text-sm text-tomato">{error}</p>}
-          <label className="block"><span className="text-sm font-bold">Name</span>
-            <input value={form.name} onChange={set('name')} className="mt-1 w-full rounded-2xl border-2 border-stone-200 px-3 py-2.5 outline-none focus:border-sage" /></label>
-          <label className="block"><span className="text-sm font-bold">Email</span>
-            <input type="email" value={form.email} onChange={set('email')} className="mt-1 w-full rounded-2xl border-2 border-stone-200 px-3 py-2.5 outline-none focus:border-sage" /></label>
-          <label className="block"><span className="text-sm font-bold">Password</span>
-            <input type="password" value={form.password} onChange={set('password')} className="mt-1 w-full rounded-2xl border-2 border-stone-200 px-3 py-2.5 outline-none focus:border-sage" /></label>
-          <button disabled={busy} className="w-full rounded-2xl bg-tomato py-2.5 font-bold text-white disabled:opacity-60">{busy ? 'Stocking…' : 'Create account'}</button>
-          <p className="text-center text-sm text-stone-500">Have one? <Link to="/login" className="font-bold text-tomato hover:underline">Log in</Link></p>
+        <form onSubmit={submit} className="mt-8 space-y-4">
+          {error && <p className="rounded-xl bg-tomato-soft px-4 py-2.5 text-sm font-semibold text-tomato" role="alert">{error}</p>}
+          {[['Name', 'name', 'name'], ['Email', 'email', 'email'], ['Password', 'password', 'new-password']].map(([label, key, ac]) => (
+            <label key={key} className="block">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-bark">{label}</span>
+              <input type={key === 'email' ? 'email' : key === 'password' ? 'password' : 'text'} value={form[key]} onChange={set(key)} autoComplete={ac}
+                className="mt-1.5 w-full rounded-xl border border-basil/20 bg-white px-4 py-3 outline-none transition focus:border-basil focus:ring-2 focus:ring-basil/15" />
+            </label>
+          ))}
+          <button disabled={busy} className="btn-primary w-full rounded-xl py-3.5 text-base font-bold disabled:opacity-70">{busy ? 'Stocking…' : 'Create account'}</button>
+          <p className="text-center text-sm text-bark">Have one? <Link to="/login" className="font-bold text-basil hover:underline">Log in</Link></p>
         </form>
       </div>
     </div>

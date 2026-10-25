@@ -1,88 +1,130 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 
+const FEATURES = [
+  { icon: '⏳', title: 'Expiry-smart shelves', body: 'Every tile counts down. Expiring items earn a “use first” ribbon before they become waste.', },
+  { icon: '🍳', title: '20 ranked recipes', body: 'From “ready to cook” to “missing 2: garlic, butter” — quantity-aware, not vibes-based.', },
+  { icon: '🛒', title: 'One-tap grocery list', body: 'Merge every shortfall into an aisle-grouped list. No duplicates — ever.', },
+  { icon: '🗓️', title: 'Weekly meal planner', body: 'Plan five dinners; we aggregate ingredients, net out the pantry, and hand you the list.', },
+];
+
+const INGREDIENTS = [
+  { e: '🍅', x: '8%', y: '12%', d: '0s', s: 'text-5xl' },
+  { e: '🥕', x: '78%', y: '6%', d: '-2s', s: 'text-4xl' },
+  { e: '🧄', x: '86%', y: '58%', d: '-4s', s: 'text-3xl' },
+  { e: '🥬', x: '4%', y: '62%', d: '-1s', s: 'text-4xl' },
+  { e: '🍋', x: '60%', y: '82%', d: '-3s', s: 'text-3xl' },
+];
+
 export default function Landing() {
   const { user } = useAuth();
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <span className="float absolute right-[10%] top-20 text-5xl opacity-70">🥕</span>
-      <span className="float absolute left-[7%] top-56 text-4xl opacity-60" style={{ animationDelay: '-3s' }}>🍅</span>
-      <span className="float absolute bottom-40 right-[18%] text-4xl opacity-50" style={{ animationDelay: '-5s' }}>🧄</span>
+      {INGREDIENTS.map((g) => (
+        <span key={g.e} className={`pointer-events-none absolute float-3d select-none opacity-70 ${g.s}`} style={{ left: g.x, top: g.y, animationDelay: g.d }} aria-hidden="true">{g.e}</span>
+      ))}
 
-      <header className="relative mx-auto flex h-20 max-w-5xl items-center justify-between px-4">
-        <Link to="/kitchen" className="flex items-center gap-2.5 text-xl font-bold">
-          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-tomato text-xl text-white shadow-lg shadow-red-300">🥘</span> PantryPal
-        </Link>
-        <Link to={user ? '/kitchen' : '/register'} className="rounded-full bg-tomato px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-red-200 transition hover:-translate-y-0.5">
-          {user ? 'My kitchen' : 'Open my kitchen'}
-        </Link>
+      <header className="relative mx-auto flex h-20 max-w-6xl items-center justify-between px-4">
+        <div className="flex items-center gap-2.5">
+          <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-basil-bright to-basil text-lg shadow-[0_10px_22px_-8px_rgba(30,86,49,.55),inset_0_1px_0_rgba(255,255,255,.3)]">🥘</span>
+          <span className="serif text-xl font-bold tracking-tight">PantryPal</span>
+        </div>
+        <nav className="flex items-center gap-2 text-sm font-semibold">
+          {user ? (
+            <Link to="/kitchen" className="btn-primary rounded-full px-6 py-2.5 font-bold">My kitchen</Link>
+          ) : (
+            <>
+              <Link to="/login" className="rounded-full px-5 py-2.5 text-bark hover:text-basil">Log in</Link>
+              <Link to="/register" className="btn-primary rounded-full px-6 py-2.5 font-bold">Open my kitchen</Link>
+            </>
+          )}
+        </nav>
       </header>
 
-      <main className="relative mx-auto max-w-5xl px-4">
-        <section className="reveal py-14 text-center sm:py-20">
-          <h1 className="mx-auto max-w-3xl text-5xl font-bold leading-tight sm:text-6xl">
-            Cook what you have.<br /><span className="text-sage">Buy only what's missing.</span>
-          </h1>
-          <p className="mx-auto mt-7 max-w-xl text-lg text-stone-500">
-            Households forget what's in the pantry, bin expired food and shop from
-            memory. PantryPal tracks your shelves, matches them against recipes,
-            and builds a grocery list of exactly what's missing.
-          </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Link to="/register" className="btn-3d hover-lift rounded-full bg-tomato px-9 py-4 font-bold text-white shadow-xl shadow-red-200">Stock my pantry →</Link>
-            <Link to="/login" className="btn-3d glass tilt-card rounded-full px-9 py-4 font-bold text-stone-700">Log in</Link>
-          </div>
-        </section>
-
-        {/* recipe match demo */}
-        <section className="reveal mx-auto mb-10 max-w-3xl">
-          <div className="float-3d glass tilt-card rounded-[2.5rem] p-8">
-            <p className="text-center text-xs font-bold uppercase tracking-widest text-sage">what can I cook tonight?</p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
-              {[
-                ['Grilled Cheese', 'Ready ✓', 'bg-sage-soft text-sage', 'wobble'],
-                ['Curd Rice', 'Ready ✓', 'bg-sage-soft text-sage', ''],
-                ['Masala Chai', 'Missing 2', 'bg-amber-100 text-amber-700', ''],
-              ].map(([title, badge, tone, extra], i) => (
-                <div key={title} className={`rounded-3xl border-2 border-stone-100 bg-white p-5 text-center shadow-sm ${extra}`} style={{ transform: `rotate(${(i - 1) * 2}deg)` }}>
-                  <p className="text-3xl">{['🧀', '🍚', '☕'][i]}</p>
-                  <p className="mt-2 font-bold">{title}</p>
-                  <span className={`mt-2 inline-block rounded-full px-3 py-1 text-xs font-bold ${tone}`}>{badge}</span>
-                </div>
-              ))}
+      <main className="relative mx-auto max-w-6xl px-4">
+        {/* ── hero ── */}
+        <section className="reveal grid items-center gap-14 py-14 lg:grid-cols-[1.1fr_1fr] lg:py-20">
+          <div>
+            <p className="serif mb-5 inline-block rounded-full border border-basil/20 bg-white/70 px-5 py-1.5 text-sm italic text-basil">
+              ~ the kitchen companion ~
+            </p>
+            <h1 className="serif text-5xl font-bold leading-[1.04] tracking-tight sm:text-7xl">
+              Cook what<br />you <span className="text-gradient italic">have.</span>
+            </h1>
+            <p className="mt-7 max-w-lg text-lg leading-relaxed text-bark">
+              Buy only what\u2019s missing. PantryPal tracks your shelves with expiry
+              intelligence, matches them against real recipes, and turns every gap into
+              a grocery list — <strong className="text-ink">in one tap.</strong>
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link to="/register" className="btn-primary rounded-full px-9 py-4 text-base font-bold">Stock my pantry →</Link>
+              <Link to="/login" className="btn-ghost rounded-full px-9 py-4 font-semibold">I have a kitchen</Link>
             </div>
-            <p className="mt-5 rounded-2xl bg-tomato/5 px-4 py-3 text-center text-sm font-semibold text-tomato">⚠️ Use first: tomatoes (2d), bread (2d)</p>
+          </div>
+
+          {/* floating 3D plate + cards */}
+          <div className="perspective relative mx-auto flex h-[440px] w-full max-w-md items-center justify-center">
+            <div className="plate float-3d absolute h-[300px] w-[300px]">
+              <div className="absolute inset-0 grid place-items-center">
+                <div className="grid grid-cols-2 gap-4 text-4xl" style={{ transform: 'translateZ(30px)' }}>
+                  <span>🍅</span><span>🧄</span><span>🥬</span><span>🥕</span>
+                </div>
+              </div>
+            </div>
+            <div className="card tilt-card absolute left-0 top-6 w-48 rotate-[-6deg] p-4" style={{ transform: 'perspective(1000px) rotateY(14deg) rotateZ(-6deg)' }}>
+              <p className="chip bg-basil/10 px-2 py-1 text-basil">ready ✓</p>
+              <p className="serif mt-2 font-bold leading-tight">Grilled Cheese</p>
+              <p className="mt-1 text-xs text-bark">4 ingredients on hand</p>
+            </div>
+            <div className="card tilt-card absolute bottom-4 right-0 w-52 rotate-[5deg] p-4" style={{ transform: 'perspective(1000px) rotateY(-12deg) rotateZ(5deg)' }}>
+              <p className="chip bg-honey-soft px-2 py-1 text-[#8a6110]">missing 2</p>
+              <p className="serif mt-2 font-bold leading-tight">Masala Chai</p>
+              <p className="mt-1 text-xs text-bark">ginger · tea powder</p>
+              <button className="btn-tomato mt-3 w-full rounded-full py-2 text-xs font-bold">+ add to list</button>
+            </div>
           </div>
         </section>
 
-        <section className="reveal grid gap-6 pb-16 sm:grid-cols-3">
-          {[
-            ['⏳', 'Expiry-smart shelves', 'Every tile shows days left. Expiring items get a "use first" badge before they become waste.'],
-            ['🍳', '20 built-in recipes', 'Ranked by match — from "ready to cook" to "missing 2: garlic, butter".'],
-            ['🛒', 'Smart grocery list', 'One tap merges every shortfall into an aisle-grouped list — no duplicates, ever.'],
-          ].map(([icon, t, b]) => (
-            <div key={t} className="rounded-3xl border-2 border-stone-100 bg-white p-7 hover-lift">
-              <span className="text-3xl">{icon}</span>
-              <h3 className="mt-3 font-bold">{t}</h3>
-              <p className="mt-2 text-sm text-stone-500">{b}</p>
+        {/* ── use-first ticker ── */}
+        <section className="reveal card-solid mx-auto mb-14 max-w-2xl overflow-hidden p-0">
+          <div className="flex items-center gap-4 border-b border-basil/10 bg-honey-soft/60 px-6 py-3">
+            <span className="chip shrink-0 bg-honey px-2.5 py-1 text-white">USE FIRST</span>
+            <p className="truncate text-sm font-semibold text-[#8a6110]">tomatoes (2d) · bread (2d) · curd — cook these before anything else</p>
+          </div>
+          <div className="grid grid-cols-3 divide-x divide-basil/10 text-center">
+            {[['11', 'recipes ranked'], ['27', 'items tracked'], ['₹0', 'wasted this week']].map(([n, l]) => (
+              <div key={l} className="px-4 py-5"><p className="serif text-3xl font-bold text-basil">{n}</p><p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-bark">{l}</p></div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── features ── */}
+        <section className="reveal grid gap-5 pb-16 sm:grid-cols-2 lg:grid-cols-4">
+          {FEATURES.map((f) => (
+            <div key={f.title} className="card tilt-card p-6">
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-honey-soft to-white text-2xl shadow-[0_8px_18px_-8px_rgba(242,166,28,.5)]">{f.icon}</span>
+              <h3 className="serif mt-4 text-lg font-bold">{f.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-bark">{f.body}</p>
             </div>
           ))}
         </section>
       </main>
 
-      <div className="border-y-2 border-tomato/10 bg-white/70 py-4">
-        <div className="marquee gap-10 text-sm font-bold text-stone-400">
+      <div className="relative border-y border-basil/10 bg-white/60 py-4">
+        <div className="marquee gap-10 text-sm font-bold text-basil/50">
           {[...Array(2)].map((_, dup) => (
             <div key={dup} className="flex gap-10 pr-10">
-              {['QUANTITY-AWARE MATCHING', 'TRANSACTIONAL COOK MODE', 'EXPIRY ALERTS', 'WASTE REPORTS', 'ZERO DUPLICATES'].map((t) => (
-                <span key={t} className="flex items-center gap-10">{t} <span className="text-sage">✿</span></span>
+              {['QUANTITY-AWARE MATCHING', 'TRANSACTIONAL COOK MODE', 'EXPIRY ALERTS', 'WASTE REPORTS', 'MEAL PLANNER', 'ZERO DUPLICATES'].map((t) => (
+                <span key={t} className="flex items-center gap-10">{t} <span className="text-tomato">✿</span></span>
               ))}
             </div>
           ))}
         </div>
       </div>
 
-      <footer className="py-10 text-center text-sm text-stone-400">PantryPal — cook what you have.</footer>
+      <footer className="relative py-12 text-center">
+        <p className="serif text-sm italic text-bark">PantryPal — cook what you have.</p>
+      </footer>
     </div>
   );
 }

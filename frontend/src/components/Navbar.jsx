@@ -1,26 +1,26 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   return (
-    <header className="sticky top-0 z-40 border-b-2 border-tomato/10 bg-kitchen/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-basil/10 bg-cream/85 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <NavLink to="/kitchen" className="flex items-center gap-2 font-bold text-lg">
-          <span className="grid h-9 w-9 place-items-center rounded-2xl bg-tomato text-sm text-white">🥘</span>
-          PantryPal
-        </NavLink>
-        <nav className="flex items-center gap-1 text-sm font-bold">
-          <NavLink to="/kitchen" className={({ isActive }) => `rounded-full px-3 py-2 ${isActive ? 'bg-sage-soft text-sage' : 'hover:text-sage'}`}>Kitchen</NavLink>
+        <Link to="/kitchen" className="group flex items-center gap-2.5">
+          <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-basil-bright to-basil text-lg shadow-[0_10px_22px_-8px_rgba(30,86,49,.55),inset_0_1px_0_rgba(255,255,255,.3)] transition group-hover:scale-105">🥘</span>
+          <span className="serif text-xl font-bold tracking-tight">PantryPal</span>
+        </Link>
+        <nav className="flex items-center gap-1.5 text-sm font-semibold">
           {user ? (
-            <button onClick={() => { logout(); navigate('/'); }} className="ml-2 rounded-full border-2 border-stone-300 px-4 py-1.5 hover:border-tomato hover:text-tomato">
-              Log out
-            </button>
+            <>
+              <span className="hidden text-bark md:block">{user?.name}</span>
+              <button onClick={() => { logout(); navigate('/'); }} className="btn-ghost rounded-full px-4 py-2">Log out</button>
+            </>
           ) : (
             <>
-              <NavLink to="/login" className="rounded-full px-3 py-2 hover:text-tomato">Log in</NavLink>
-              <NavLink to="/register" className="rounded-full bg-tomato px-4 py-2 text-white hover:bg-red-700">Open my kitchen</NavLink>
+              <Link to="/login" className="rounded-full px-4 py-2 text-bark hover:text-basil">Log in</Link>
+              <Link to="/register" className="btn-primary rounded-full px-5 py-2 font-bold">Open my kitchen</Link>
             </>
           )}
         </nav>
