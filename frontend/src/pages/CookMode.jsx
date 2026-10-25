@@ -95,7 +95,7 @@ export default function CookMode() {
           className="btn-primary mt-7 w-full rounded-full py-5 text-lg font-bold disabled:opacity-40">
           {busy ? 'Updating the pantry…' : allChecked ? '✓ Cooked! Deduct from pantry' : 'Tick every ingredient to finish'}
         </button>
-        <p className="mt-3 text-center text-xs text-bark">Cooking deducts used quantities — if anything\u2019s short, nothing changes.</p>
+        <p className="mt-3 text-center text-xs text-bark">Cooking deducts used quantities — if anything’s short, nothing changes.</p>
       </main>
     </div>
   );

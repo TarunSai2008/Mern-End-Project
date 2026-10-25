@@ -52,7 +52,7 @@ export default function Landing() {
               Cook what<br />you <span className="text-gradient italic">have.</span>
             </h1>
             <p className="mt-7 max-w-lg text-lg leading-relaxed text-bark">
-              Buy only what\u2019s missing. PantryPal tracks your shelves with expiry
+              Buy only what’s missing. PantryPal tracks your shelves with expiry
               intelligence, matches them against real recipes, and turns every gap into
               a grocery list — <strong className="text-ink">in one tap.</strong>
             </p>

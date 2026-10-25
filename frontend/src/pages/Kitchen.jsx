@@ -115,7 +115,7 @@ export default function Kitchen() {
         <div className="reveal flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-basil">your kitchen</p>
-            <h1 className="serif mt-2 text-4xl font-bold tracking-tight sm:text-5xl">What\u2019s cooking tonight?</h1>
+            <h1 className="serif mt-2 text-4xl font-bold tracking-tight sm:text-5xl">What’s cooking tonight?</h1>
           </div>
           <button onClick={openAdd} className="btn-tomato rounded-full px-6 py-3 text-sm font-bold">+ Stock an item</button>
         </div>

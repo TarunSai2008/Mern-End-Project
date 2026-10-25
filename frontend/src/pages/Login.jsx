@@ -18,7 +18,7 @@ export default function Login() {
     setBusy(true);
     try {
       await login(form.email, form.password);
-      toast('Kitchen\u2019s open!');
+      toast('Kitchen’s open!');
       navigate('/kitchen');
     } catch (err) { setError(err.message); } finally { setBusy(false); }
   }
@@ -32,7 +32,7 @@ export default function Login() {
         <div className="text-center">
           <span className="mx-auto grid h-14 w-14 place-items-center rounded-3xl bg-gradient-to-br from-basil-bright to-basil text-2xl shadow-[0_14px_28px_-10px_rgba(30,86,49,.55),inset_0_1px_0_rgba(255,255,255,.3)]">🥘</span>
           <h1 className="serif mt-5 text-3xl font-bold">Welcome back</h1>
-          <p className="mt-1.5 text-sm text-bark">What\u2019s cooking tonight?</p>
+          <p className="mt-1.5 text-sm text-bark">What’s cooking tonight?</p>
         </div>
         <form onSubmit={submit} className="mt-8 space-y-4">
           {error && <p className="rounded-xl bg-tomato-soft px-4 py-2.5 text-sm font-semibold text-tomato" role="alert">{error}</p>}
