@@ -113,7 +113,7 @@ showcase use; use your own account for personal data.
 The Vite development server proxies `/api` to the backend, matching the
 same-origin setup used by the deployed app.
 
-**Demo credentials**: `arav@demo.com` / `Demo@1234`. Seed includes a 27-item
+**Demo credentials**: `arav@demo.com` / `Demo@1234`. Seed includes a 28-item
 pantry (one expired, several expiring), 20 recipes, and a grocery list with
 one pending item.
 
