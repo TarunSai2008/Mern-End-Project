@@ -163,11 +163,15 @@ one pending item.
   without traffic; the first request after that can take about a minute to
   wake. MongoDB Atlas keeps app data independently of service restarts. See
   [Render's free service limits](https://render.com/docs/free).
+- **Temporary demo fallback**: If Atlas rejects the database credentials, the
+  app starts with an in-memory demo database so the showcase remains available.
+  Changes made in this mode reset whenever the Render service restarts. Set a
+  valid `MONGODB_URI` to use persistent Atlas storage.
 - **Separate frontend hosting (optional)**: If you later deploy the frontend to
   Vercel, set `VITE_API_URL` to the full Render API URL ending in `/api`, and
   set the backend's `CLIENT_ORIGIN` to the Vercel site origin.
 
-Live app: add the Render URL here after the first successful deployment.
+Live app: <https://pantrypal-ggfc.onrender.com>
 
 ## Error Handling & Security
 
