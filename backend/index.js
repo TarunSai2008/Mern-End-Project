@@ -6,11 +6,11 @@ const User = require('./models/User.model');
 
 (async () => {
   const { memory } = await connectDB();
-  if (memory && (await User.countDocuments()) === 0) {
+  if ((await User.countDocuments()) === 0) {
     await seed();
-    console.log('Demo data seeded (in-memory database was empty).');
+    console.log(`Demo data seeded (the ${memory ? 'in-memory' : 'MongoDB'} database was empty).`);
   }
-  app.listen(env.PORT, () => console.log(`PantryPal API listening on http://localhost:${env.PORT}`));
+  app.listen(env.PORT, '0.0.0.0', () => console.log(`PantryPal listening on port ${env.PORT}`));
 })().catch((err) => {
   console.error('Failed to start:', err.message);
   process.exit(1);
